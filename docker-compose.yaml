@@ -1,0 +1,26 @@
+version: "3.4"
+services:
+  login:
+    build:
+      context: ./login
+    container_name: python-login-app-with-exp
+    image: tvkrishna21/python-login-app-with-exp:1.1.1
+    links:
+      - db
+    ports:
+    - "5000:5000"
+    volumes:
+    - .:/code
+  db:
+    image: mysql:5.7
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
+      - sqldb:/var/lib/mysql
+volumes:
+  sqldb:
+    external: true
+ 
